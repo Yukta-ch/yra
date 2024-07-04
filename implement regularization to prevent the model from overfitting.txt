@@ -1,0 +1,152 @@
+PRACTICAL 2
+AIM: Write a Program to implement regularization to prevent the model from overfitting.
+
+
+
+
+CODE:
+# Import necessary libraries for data handling and neural network creation
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras import regularizers
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Generate a synthetic dataset with 1000 samples, 20 features, and 2 classes
+X, y = make_classification(n_samples=1000, n_features=20, n_classes=2, random_state=42)
+
+# Split the dataset into training (80%) and testing (20%) sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Define a function to create a neural network model with regularization
+def create_regularized_model():
+    model = Sequential([  # Initialize a sequential model
+        Dense(64, input_shape=(X_train.shape[1],), activation='relu', kernel_regularizer=regularizers.l2(0.01)),  # Add a dense layer with ReLU activation and L2 regularization
+        Dropout(0.5),  # Add a dropout layer to prevent overfitting
+        Dense(32, activation='relu', kernel_regularizer=regularizers.l2(0.01)),  # Add another dense layer with ReLU activation and L2 regularization
+        Dropout(0.5),  # Add another dropout layer
+        Dense(1, activation='sigmoid')  # Add an output layer with sigmoid activation
+    ])
+    return model
+
+# Define a function to train and evaluate the regularized model
+def train_and_evaluate_regularized_model():
+    model = create_regularized_model()  # Create the model
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])  # Compile the model with Adam optimizer and binary cross-entropy loss
+    model.fit(X_train, y_train, epochs=20, batch_size=32, verbose=0)  # Train the model for 20 epochs with a batch size of 32
+    y_pred = (model.predict(X_test) > 0.5).astype("int32")  # Predict the output for the test set and convert probabilities to binary labels
+    accuracy = accuracy_score(y_test, y_pred)  # Calculate the accuracy of the model
+    return accuracy
+
+# Train and evaluate the regularized model
+accuracy_regularized = train_and_evaluate_regularized_model()
+
+# Print the accuracy of the regularized model
+print(f'Accuracy with regularization: {accuracy_regularized:.4f}')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Background Information
+Regularization in Machine Learning:
+
+Regularization is a technique used to prevent overfitting in machine learning models. Overfitting occurs when a model learns the training data too well, including its noise and outliers, which negatively affects its performance on new, unseen data.
+Regularization adds a penalty to the loss function to discourage the model from fitting the training data too closely.
+Common types of regularization include L1 (Lasso), L2 (Ridge), and Dropout.
+Feed-forward Neural Network:
+
+A feed-forward neural network consists of an input layer, one or more hidden layers, and an output layer.
+Information flows in one direction, from the input layer to the output layer.
+Each neuron in a layer is connected to every neuron in the next layer.
+
+Explanation:
+Libraries:
+
+Numpy: For numerical operations.
+TensorFlow and Keras: For building and training the neural network.
+Scikit-learn: For generating synthetic data, splitting the data, and calculating accuracy.
+Data Generation:
+
+We generate a synthetic dataset with 1000 samples, 20 features, and 2 classes using make_classification.
+Data Splitting:
+
+The dataset is split into training (80%) and testing (20%) sets using train_test_split.
+Model Creation:
+
+We define a function create_regularized_model to create a neural network with regularization:
+Dense Layers: Two dense layers with 64 and 32 neurons, ReLU activation, and L2 regularization.
+Dropout Layers: Two dropout layers with a 50% dropout rate to prevent overfitting.
+Output Layer: A dense output layer with a sigmoid activation function.
+Model Training and Evaluation:
+
+We define a function train_and_evaluate_regularized_model to compile, train, and evaluate the model.
+The model is compiled with the Adam optimizer and binary cross-entropy loss.
+The model is trained for 20 epochs with a batch size of 32.
+Predictions are made on the test set, and accuracy is calculated using accuracy_score.
+
+
+Output:
+
+The accuracy of the model on the test set is printed.
