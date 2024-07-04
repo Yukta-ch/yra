@@ -1,0 +1,203 @@
+PRACTICAL4: Implement deep learning for the Prediction of the autoencoder from the test data (e.g. MNIST data set).
+
+CODE:
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+# Load the MNIST dataset
+# MNIST dataset consists of handwritten digits (0-9)
+(X_train, _), (X_test, _) = mnist.load_data()
+
+# Normalize pixel values to the range [0, 1]
+# Pixel values range from 0 to 255; this scales them to 0 to 1
+X_train = X_train.astype('float32') / 255.0
+X_test = X_test.astype('float32') / 255.0
+
+# Flatten the images
+# Images are 28x28 pixels; this flattens them into a single 784-length vector
+X_train = X_train.reshape((len(X_train), np.prod(X_train.shape[1:])))
+X_test = X_test.reshape((len(X_test), np.prod(X_test.shape[1:])))
+
+# Define the autoencoder model
+def create_autoencoder_model():
+    model = Sequential([
+        Dense(128, activation='relu', input_shape=(784,)),  # First hidden layer with 128 neurons
+        Dense(64, activation='relu'),                       # Second hidden layer with 64 neurons
+        Dense(32, activation='relu'),                       # Third hidden layer with 32 neurons (bottleneck layer)
+        Dense(64, activation='relu'),                       # Fourth hidden layer with 64 neurons
+        Dense(128, activation='relu'),                      # Fifth hidden layer with 128 neurons
+        Dense(784, activation='sigmoid')                    # Output layer with 784 neurons (to match input)
+    ])
+    return model
+
+# Function to train the autoencoder model
+def train_autoencoder_model():
+    model = create_autoencoder_model()                      # Create the autoencoder model
+    model.compile(optimizer='adam', loss='binary_crossentropy')  # Compile the model with Adam optimizer and binary cross-entropy loss
+    model.fit(X_train, X_train, epochs=10, batch_size=256, shuffle=True, validation_data=(X_test, X_test))  # Train the model
+    return model
+
+# Train the autoencoder model
+autoencoder_model = train_autoencoder_model()
+
+# Predict outputs using the trained autoencoder model
+reconstructed_images = autoencoder_model.predict(X_test)
+
+# Display original and reconstructed images
+import matplotlib.pyplot as plt
+
+n = 10  # Number of images to display
+plt.figure(figsize=(20, 4))
+for i in range(n):
+    # Display original images
+    ax = plt.subplot(2, n, i + 1)
+    plt.imshow(X_test[i].reshape(28, 28))  # Reshape the flat image back to 28x28 for display
+    plt.gray()  # Display in grayscale
+    ax.get_xaxis().set_visible(False)  # Hide x-axis
+    ax.get_yaxis().set_visible(False)  # Hide y-axis
+
+    # Display reconstructed images
+    ax = plt.subplot(2, n, i + 1 + n)
+    plt.imshow(reconstructed_images[i].reshape(28, 28))  # Reshape the flat image back to 28x28 for display
+    plt.gray()  # Display in grayscale
+    ax.get_xaxis().set_visible(False)  # Hide x-axis
+    ax.get_yaxis().set_visible(False)  # Hide y-axis
+plt.show()  # Show the plot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#CODE OUTPUT EXPLANATION:
+
+#The output of the above code will consist of two rows of images displayed side by side:
+
+#Original Images: The top row will show the original images from the MNIST test dataset. These images are grayscale, 28x28 pixel representations #of handwritten digits (0-9).
+
+#Reconstructed Images: The bottom row will show the images reconstructed by the autoencoder. These images are the model's attempt to recreate #the original images after compressing and then decompressing them through the neural network layers.
+
+#Key Points in the Output:
+#Comparison: By comparing the top and bottom rows, you can see how well the autoencoder has learned to compress and reconstruct the images. #Ideally, the reconstructed images should be quite similar to the original images.
+
+#Quality of Reconstruction: Differences between the original and reconstructed images can give insight into how well the autoencoder is #performing. If the reconstructed images are very similar to the originals, the autoencoder is doing a good job. If there are noticeable #differences, it may indicate that the model needs more training or a different architecture.
+
+#Example:
+#Original Image: A clear, detailed image of a handwritten digit '7'.
+#Reconstructed Image: A slightly blurred or less detailed image of the same handwritten digit '7'. The overall shape should be the same, but #some fine details might be lost.
+#By examining these images, you can get a visual understanding of how well the autoencoder is performing its task of dimensionality reduction #and reconstruction.
+
+
+
+
+
+
+
+
+#Background Information:
+#Deep Learning:
+
+#A subset of machine learning where neural networks with many layers (hence "deep") learn to perform tasks by considering examples.
+#It is particularly useful for tasks like image recognition, natural language processing, and more.
+#Autoencoder:
+
+#A type of artificial neural network used to learn efficient codings of input data.
+#It consists of two main parts:
+#Encoder: Compresses the input into a smaller representation.
+#Decoder: Reconstructs the input from this compressed representation.
+Useful for purposes like noise reduction, dimensionality reduction, and anomaly detection.
+MNIST Dataset:
+
+#A popular dataset of handwritten digits (0-9), containing 60,000 training images and 10,000 test images.
+#Each image is 28x28 pixels.
+#Step-by-Step Implementation:
+#Step 1: Import Necessary Libraries
+
+#Step 2: Load and Prepare the Data
+#Load the MNIST dataset.
+#Normalize the pixel values to be between 0 and 1.
+#Flatten the images to turn them into 1D arrays.
+
+#Step 3: Build the Autoencoder Model
+#Create a neural network with layers to encode and decode the images.
+#The architecture includes an input layer, hidden layers for encoding and decoding, and an output layer.
+
+
+#Step 4: Train the Autoencoder Model
+#Compile the model with an optimizer and loss function.
+#Train the model using the training data.
+
+#Step 5: Predict and Reconstruct the Test Data
+#Use the trained model to predict (reconstruct) the images from the test data.
+
+#Step 6: Visualize the Original and Reconstructed Images
+#Display some original and reconstructed images side by side for comparison.
+
+
+
+
+
+
+
+#Explanation:
+#Import Libraries: Load the necessary libraries for building and training the model.
+#Load Data: Load the MNIST dataset, normalize it, and flatten the images for the neural network.
+#Build Model: Create an autoencoder model with specific layers for encoding and decoding the data.
+#Train Model: Compile and train the model using the training data.
+#Predict: Use the trained autoencoder to reconstruct the test images.
+#Visualize: Compare the original and reconstructed images to see how well the autoencoder performs.
+#This code allows you to build, train, and use an autoencoder to reconstruct handwritten digit images, providing a simple introduction to deep #learning with autoencoders.
