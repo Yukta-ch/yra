@@ -1,0 +1,211 @@
+AIM: Write a program for object detection from the image.
+
+
+CODE:
+
+import cv2
+from matplotlib import pyplot as plt
+
+# Opening the image file
+img = cv2.imread("/content/sample_data/image.jpg") # Replace "image.jpg" with the actual image file
+
+# OpenCV opens images in BGR format
+# We convert it to RGB format and also create a grayscale version
+img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+# Create a subplot to display the RGB image
+plt.subplot(1, 1, 1)
+plt.imshow(img_rgb)
+plt.show()
+
+# Load the pre-trained classifier for detecting stop signs
+stop_data = cv2.CascadeClassifier('/content/sample_data/stop_data.xml')
+
+# Detect stop signs in the grayscale image
+# minSize is used to filter out very small detections
+found = stop_data.detectMultiScale(img_gray, minSize=(20, 20))
+
+# Get the number of stop signs found
+amount_found = len(found)
+
+# If any stop signs are found
+if amount_found != 0:
+    # Loop through each detected stop sign
+    for (x, y, width, height) in found:
+        # Draw a green rectangle around each detected stop sign
+        cv2.rectangle(img_rgb, (x, y), (x + height, y + width), (0, 255, 0), 5)
+
+# Create a subplot to display the RGB image with rectangles
+plt.subplot(1, 1, 1)
+plt.imshow(img_rgb)
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Detailed Explanation
+#Import Libraries:
+
+#cv2 for image processing.
+#pyplot from matplotlib for displaying images.
+#Open Image:
+
+#Load the image from a file.
+#Convert Image:
+
+#Convert the image from BGR to grayscale (img_gray).
+#Convert the image from BGR to RGB (img_rgb).
+#Display Image:
+
+#Display the RGB image using Matplotlib.
+#Load Classifier:
+
+#Load the pre-trained Haar Cascade classifier for stop sign detection (stop_data.xml).
+#Detect Stop Signs:
+
+#Detect stop signs in the grayscale image.
+#Use minSize to ignore very small detections.
+#Count Detections:
+
+#Count the number of stop signs detected.
+#Draw Rectangles:
+
+#If any stop signs are found, draw a green rectangle around each one.
+#Display Image with Detections:
+
+#Display the RGB image with rectangles around detected stop signs using Matplotlib.
+
+
+
+
+
+
+#EXPLAINATION OUTPUT
+
+#When you run the code, the following outputs are generated:
+
+#Initial Image Display:
+
+#The code first converts the input image from BGR to RGB and then displays it using Matplotlib. This shows the original image without any #modifications.
+#Detection Process:
+
+#The code uses a pre-trained Haar Cascade classifier (stop_data.xml) to detect stop signs in the grayscale version of the image.
+#The detectMultiScale function returns a list of rectangles where each rectangle corresponds to a detected stop sign. Each rectangle is defined #by its top-left corner coordinates (x, y) and its width and height.
+#Annotated Image Display:
+
+#If any stop signs are detected, the code draws green rectangles around each detected stop sign on the RGB image.
+#The annotated image is then displayed using Matplotlib, showing the original image with green rectangles around the detected stop signs.
+#Expected Output
+#First Image Display:
+
+#You will see the original image displayed in RGB format.
+#Detection and Annotation:
+
+#If the classifier detects any stop signs, you will see green rectangles around each detected stop sign in the image.
+#If no stop signs are detected, the image will look the same as the first displayed image.
+#Example Scenarios
+#No Stop Signs Detected:
+
+#The first image (original image) is displayed.
+#The second image is identical to the first image because no stop signs were detected.
+#Stop Signs Detected:
+
+#The first image (original image) is displayed.
+#The second image shows the original image with green rectangles around the detected stop signs.
+
+
+#Notes
+#The effectiveness of the detection depends on the quality of the input image and the accuracy of the classifier.
+#If the stop signs are small or partially obscured, they might not be detected.
+#Ensure that the stop_data.xml file is correctly loaded and available in the working directory.
+
+
+
+
+
+
+
+
+
+#Background Information
+#Object Detection:
+
+#Object detection is a computer vision technique used to locate and identify objects within an image.
+#It involves not only classifying objects but also drawing bounding boxes around them to indicate their positions.
+#This technique is used in various applications like self-driving cars, facial recognition, and security systems.
+#Tools Used:
+
+#OpenCV: A popular open-source computer vision library that provides tools for image processing and object detection.
+#Haar Cascade Classifier: A machine learning object detection method used to identify objects in images. It is trained on lots of positive and #negative images to detect objects like faces, stop signs, etc.
+
+
+
+#Program Explanation
+#Import Libraries: We'll use OpenCV for image processing and Matplotlib for displaying images.
+#Load Image: We'll load the input image using OpenCV.
+#Convert Image: Convert the image to grayscale since Haar Cascade works better on grayscale images.
+#Load Classifier: Load the pre-trained Haar Cascade classifier for the object we want to detect (e.g., faces).
+#Detect Objects: Use the classifier to detect objects in the image.
+#Draw Rectangles: Draw rectangles around the detected objects.
+#Display Image: Show the original and annotated images using Matplotlib.
