@@ -1,0 +1,203 @@
+PRACTICAL1
+AIM: Implement Feed-forward Neural Network and train the network with different optimizers and compare the results.
+
+
+
+
+CODE:
+# Import necessary libraries
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.optimizers import SGD, Adam, RMSprop
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Generate synthetic dataset
+# Create a dataset with 1000 samples, 20 features, and 2 classes
+X, y = make_classification(n_samples=1000, n_features=20, n_classes=2, random_state=42)
+# Split the dataset into training and testing sets (80% train, 20% test)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Define the feed-forward neural network model
+def create_model():
+    # Create a sequential model
+    model = Sequential([
+        # Add a dense layer with 64 units and ReLU activation
+        Dense(64, input_shape=(X_train.shape[1],), activation='relu'),
+        # Add another dense layer with 32 units and ReLU activation
+        Dense(32, activation='relu'),
+        # Add an output layer with 1 unit and sigmoid activation (for binary classification)
+        Dense(1, activation='sigmoid')
+    ])
+    return model
+
+# Function to train and evaluate the model
+def train_and_evaluate(optimizer):
+    # Create the model
+    model = create_model()
+    # Compile the model with the specified optimizer, binary cross-entropy loss, and accuracy metric
+    model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
+    # Train the model on the training data for 20 epochs with a batch size of 32
+    model.fit(X_train, y_train, epochs=20, batch_size=32, verbose=0)
+    # Predict the labels for the test data (convert probabilities to binary labels)
+    y_pred = (model.predict(X_test) > 0.5).astype("int32")
+    # Calculate the accuracy of the predictions
+    accuracy = accuracy_score(y_test, y_pred)
+    return accuracy
+
+# Train and evaluate models with different optimizers
+optimizers = ['SGD', 'Adam', 'RMSprop']
+results = {}
+# Loop over each optimizer
+for optimizer in optimizers:
+    # Train and evaluate the model with the current optimizer
+    accuracy = train_and_evaluate(optimizer)
+    # Store the results in the dictionary
+    results[optimizer] = accuracy
+
+# Print the results
+# Loop over each optimizer and print the accuracy
+for optimizer, accuracy in results.items():
+    print(f'Accuracy with {optimizer} optimizer: {accuracy:.4f}')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CODE EXPLANATION:
+This code performs the following tasks:
+
+Imports necessary libraries for data handling, model creation, and evaluation.
+Generates a synthetic dataset with 1000 samples, 20 features, and 2 classes.
+Splits the dataset into training and testing sets.
+Defines a feed-forward neural network model with three layers.
+Creates a function to train and evaluate the model with a given optimizer.
+Trains and evaluates the model using three different optimizers: SGD, Adam, and RMSprop.
+Prints the accuracy of the model for each optimizer.
+
+
+
+
+OUTPUT EXPLANATION:
+The output in the picture shows the results of training and evaluating the neural network model with three different optimizers: SGD, Adam, and RMSprop. Here is an explanation of the results:
+
+Training Process:
+
+Each training process involves 20 epochs. The 7/7 indicates the completion of all steps in each epoch.
+The time taken for each step is shown in milliseconds (ms) per step.
+Accuracy with Different Optimizers:
+
+SGD (Stochastic Gradient Descent) Optimizer:
+Accuracy: 0.8200
+This means that the model trained with the SGD optimizer correctly classified 82.00% of the test data.
+Adam Optimizer:
+Accuracy: 0.8650
+The model trained with the Adam optimizer correctly classified 86.50% of the test data.
+RMSprop Optimizer:
+Accuracy: 0.8650
+The model trained with the RMSprop optimizer also correctly classified 86.50% of the test data.
+
+Summary:
+The SGD optimizer achieved an accuracy of 82.00% on the test set.
+Both the Adam and RMSprop optimizers achieved a higher accuracy of 86.50% on the test set.
+This indicates that the Adam and RMSprop optimizers performed better than the SGD optimizer for this particular task.
+Interpretation:
+The higher accuracy with Adam and RMSprop suggests that these optimizers were more effective in finding the optimal weights for the neural network, resulting in better performance on the test data compared to SGD.
+
+
+
+
+BACKGROUND INFORMATION:
+
+What is a Feed-forward Neural Network?
+A Feed-forward Neural Network (FNN) is a type of artificial neural network where connections between the nodes do not form cycles.
+It consists of an input layer, one or more hidden layers, and an output layer.
+Each neuron in a layer is connected to every neuron in the next layer.
+
+
+What is an Optimizer in Neural Networks?
+An optimizer is an algorithm or method used to change the attributes of the neural network such as weights and learning rate to reduce the losses.
+Different optimizers include SGD (Stochastic Gradient Descent), Adam, and RMSprop.
+
+
+Explanation of the Code:
+Import Libraries:
+
+numpy for numerical operations.
+tensorflow for building and training neural networks.
+sklearn for generating synthetic data and evaluating model performance.
+Generate Synthetic Dataset:
+
+Use make_classification to create a dataset with 1000 samples, 20 features, and 2 classes.
+Split the dataset into training and testing sets.
+Define the Feed-forward Neural Network:
+
+Create a simple neural network with 2 hidden layers and 1 output layer using the Sequential model from Keras.
+Use the ReLU activation function for hidden layers and the Sigmoid activation function for the output layer.
+Train and Evaluate the Model:
+
+Define a function to compile, train, and evaluate the model with a given optimizer.
+Train the model for 20 epochs and use binary cross-entropy loss.
+Compare Optimizers:
+
+Train and evaluate the model using three different optimizers: SGD, Adam, and RMSprop.
+Store the accuracy of each optimizer in a dictionary.
+Print Results:
+
+Print the accuracy for each optimizer.
+
+Output Interpretation:
+The code will display the accuracy of the feed-forward neural network trained with each optimizer.
+You can compare the results to see which optimizer performs best for this specific task.
