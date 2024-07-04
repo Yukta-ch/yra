@@ -109,44 +109,44 @@ print(f'Accuracy with regularization: {accuracy_regularized:.4f}')
 
 
 
-Background Information
-Regularization in Machine Learning:
+#Background Information
+#Regularization in Machine Learning:
 
-Regularization is a technique used to prevent overfitting in machine learning models. Overfitting occurs when a model learns the training data too well, including its noise and outliers, which negatively affects its performance on new, unseen data.
-Regularization adds a penalty to the loss function to discourage the model from fitting the training data too closely.
-Common types of regularization include L1 (Lasso), L2 (Ridge), and Dropout.
-Feed-forward Neural Network:
+#Regularization is a technique used to prevent overfitting in machine learning models. Overfitting occurs when a model learns the training data too well, #including its noise and outliers, which negatively affects its performance on new, unseen data.
+#Regularization adds a penalty to the loss function to discourage the model from fitting the training data too closely.
+#Common types of regularization include L1 (Lasso), L2 (Ridge), and Dropout.
+#Feed-forward Neural Network:
 
-A feed-forward neural network consists of an input layer, one or more hidden layers, and an output layer.
-Information flows in one direction, from the input layer to the output layer.
-Each neuron in a layer is connected to every neuron in the next layer.
+#A feed-forward neural network consists of an input layer, one or more hidden layers, and an output layer.
+#Information flows in one direction, from the input layer to the output layer.
+#Each neuron in a layer is connected to every neuron in the next layer.
 
-Explanation:
-Libraries:
+#Explanation:
+#Libraries:
 
-Numpy: For numerical operations.
-TensorFlow and Keras: For building and training the neural network.
-Scikit-learn: For generating synthetic data, splitting the data, and calculating accuracy.
-Data Generation:
+#Numpy: For numerical operations.
+#TensorFlow and Keras: For building and training the neural network.
+#Scikit-learn: For generating synthetic data, splitting the data, and calculating accuracy.
+#Data Generation:
 
-We generate a synthetic dataset with 1000 samples, 20 features, and 2 classes using make_classification.
-Data Splitting:
+#We generate a synthetic dataset with 1000 samples, 20 features, and 2 classes using make_classification.
+#Data Splitting:
 
-The dataset is split into training (80%) and testing (20%) sets using train_test_split.
-Model Creation:
+#The dataset is split into training (80%) and testing (20%) sets using train_test_split.
+#Model Creation:
 
-We define a function create_regularized_model to create a neural network with regularization:
-Dense Layers: Two dense layers with 64 and 32 neurons, ReLU activation, and L2 regularization.
-Dropout Layers: Two dropout layers with a 50% dropout rate to prevent overfitting.
-Output Layer: A dense output layer with a sigmoid activation function.
-Model Training and Evaluation:
+#We define a function create_regularized_model to create a neural network with regularization:
+#Dense Layers: Two dense layers with 64 and 32 neurons, ReLU activation, and L2 regularization.
+#Dropout Layers: Two dropout layers with a 50% dropout rate to prevent overfitting.
+#Output Layer: A dense output layer with a sigmoid activation function.
+#Model Training and Evaluation:
 
-We define a function train_and_evaluate_regularized_model to compile, train, and evaluate the model.
-The model is compiled with the Adam optimizer and binary cross-entropy loss.
-The model is trained for 20 epochs with a batch size of 32.
-Predictions are made on the test set, and accuracy is calculated using accuracy_score.
+#We define a function train_and_evaluate_regularized_model to compile, train, and evaluate the model.
+#The model is compiled with the Adam optimizer and binary cross-entropy loss.
+#The model is trained for 20 epochs with a batch size of 32.
+#Predictions are made on the test set, and accuracy is calculated using accuracy_score.
 
 
-Output:
+#Output:
 
-The accuracy of the model on the test set is printed.
+#The accuracy of the model on the test set is printed.
