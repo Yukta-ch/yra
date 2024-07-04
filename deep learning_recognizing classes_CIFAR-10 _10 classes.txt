@@ -1,0 +1,190 @@
+PRACTICAL 3
+Aim: Implement deep learning for recognizing classes for datasets like CIFAR-10 images for previously unseen images and assign them to one of the 10 classes.
+
+
+
+
+CODE:
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.datasets import cifar10
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from tensorflow.keras.utils import to_categorical
+from sklearn.metrics import accuracy_score
+
+# Load CIFAR-10 dataset
+# The dataset is divided into training data (X_train, y_train) and testing data (X_test, y_test)
+(X_train, y_train), (X_test, y_test) = cifar10.load_data()
+
+# Normalize pixel values to the range [0, 1]
+# This helps the neural network train better by ensuring the input values are small
+X_train = X_train.astype('float32') / 255.0
+X_test = X_test.astype('float32') / 255.0
+
+# One-hot encode the target labels
+# This converts the class labels (0-9) into a format suitable for categorical classification
+y_train = to_categorical(y_train, num_classes=10)
+y_test = to_categorical(y_test, num_classes=10)
+
+# Define the CNN model
+def create_cnn_model():
+    model = Sequential([
+        # First convolutional layer with 32 filters, 3x3 kernel, and ReLU activation
+        Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(32, 32, 3)),
+        # Max pooling layer to reduce the spatial dimensions of the feature maps
+        MaxPooling2D((2, 2)),
+        # Second convolutional layer with 64 filters
+        Conv2D(64, (3, 3), activation='relu', padding='same'),
+        # Another max pooling layer
+        MaxPooling2D((2, 2)),
+        # Third convolutional layer with 64 filters
+        Conv2D(64, (3, 3), activation='relu', padding='same'),
+        # Flatten the 3D output to 1D for the dense layers
+        Flatten(),
+        # Fully connected (dense) layer with 64 units and ReLU activation
+        Dense(64, activation='relu'),
+        # Output layer with 10 units (one for each class) and softmax activation
+        Dense(10, activation='softmax')
+    ])
+    return model
+
+# Function to train and evaluate the CNN model
+def train_and_evaluate_cnn_model():
+    model = create_cnn_model()  # Create the CNN model
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])  # Compile the model
+    # Train the model on the training data, using 10% of the data for validation
+    model.fit(X_train, y_train, epochs=10, batch_size=64, verbose=1, validation_split=0.1)
+    # Predict the classes of the test data
+    y_pred = np.argmax(model.predict(X_test), axis=-1)
+    # Calculate the accuracy by comparing predicted classes to true classes
+    accuracy = accuracy_score(np.argmax(y_test, axis=-1), y_pred)
+    return accuracy
+
+# Train and evaluate the CNN model
+accuracy_cnn = train_and_evaluate_cnn_model()
+
+print(f'Accuracy of the CNN model on CIFAR-10 test set: {accuracy_cnn:.4f}')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Background Information:
+# What is CIFAR-10?
+# • CIFAR-10 is a dataset that contains 60,000 color images in 10 different classes.
+# • The classes are: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck.
+# • Each image is 32x32 pixels in size.
+
+
+
+
+
+
+# What is Deep Learning?
+# • Deep Learning is a type of machine learning that uses neural networks with many layers (hence "deep").
+# • These neural networks can learn to recognize patterns in data, like images, sounds, and text.
+
+
+
+
+
+
+# Steps to Recognize Classes with Deep Learning:
+# 1. Collect Data:
+#    o Use the CIFAR-10 dataset, which has labeled images for training a model.
+# 2. Prepare the Data:
+#    o Split the dataset into training and testing sets.
+#    o Training set: Used to train the neural network.
+#    o Testing set: Used to evaluate the performance of the trained model.
+# 3. Build a Neural Network:
+#    o Create a neural network with multiple layers.
+#    o Commonly used layers include convolutional layers (for detecting patterns), pooling layers (for reducing the size), and fully connected layers (for making final decisions).
+# 4. Train the Network:
+#    o Feed the training data into the network.
+#    o The network adjusts its parameters (weights) to minimize the difference between its predictions and the actual labels (using a process called backpropagation).
+# 5. Evaluate the Network:
+#    o Test the trained network with the testing data.
+#    o Check how well it predicts the classes of the unseen images.
+# 6. Make Predictions:
+#    o Once the network is trained and evaluated, it can be used to predict the classes of new, unseen images.
+
+
+
+
+
+# Summary:
+# • Deep learning can be used to recognize image classes by training a neural network on labeled data (like CIFAR-10).
+# • Neural networks learn to recognize patterns in images through training.
+# • Evaluating the network ensures it can accurately classify unseen images.
+# By following these steps, you can build a model that assigns new images to one of the 10 CIFAR-10 classes.
+
+
+
+
+
+# Explanation:
+# 1. Import Libraries: We import the necessary libraries for deep learning and data handling.
+# 2. Load Data: We load the CIFAR-10 dataset, which is split into training and testing sets.
+# 3. Normalize Data: We normalize the pixel values of the images to be between 0 and 1 for better training performance.
+# 4. One-Hot Encode Labels: We convert the class labels into a one-hot encoded format to be used with categorical cross-entropy loss.
+# 5. Create CNN Model:
+#    o We define a function to create a Convolutional Neural Network (CNN) model.
+#    o The model has three convolutional layers followed by max-pooling layers, a flattening layer, a dense layer, and an output layer.
+# 6. Train and Evaluate Model:
+#    o We define a function to compile, train, and evaluate the model.
+#    o The model is trained on the training data and validated with a portion of it.
+#    o We predict the classes of the test data and calculate the accuracy.
+# 7. Print Accuracy: Finally, we print the accuracy of the model on the test set.
+# This code trains a CNN to classify images in the CIFAR-10 dataset and evaluates its performance on unseen test data.
+
+
+
+
+
+# OUTPUT:
+# Training Process
+# The training process consists of 10 epochs, where each epoch represents one complete pass through the entire training dataset.
+# Explanation
+# • Training Loss and Training Accuracy: These metrics show how well the model is learning during each epoch. Lower loss and higher accuracy indicate better performance.
+# • Validation Loss and Validation Accuracy: These metrics are used to evaluate the model's performance on a validation set that the model has not seen during training. This helps in understanding how well the model will perform on unseen data.
+# • Duration: The time taken to complete each epoch or the evaluation step.
+# • Test Accuracy: This is the final accuracy of the model on the test set, which consists of data the model has never seen before. This is a measure of the model's generalization ability.
+# The output shows that the model's training accuracy and validation accuracy improve with each epoch, indicating that the model is learning well. The final test accuracy is 71.66%, which means the model correctly classifies about 71.66% of the test images.
