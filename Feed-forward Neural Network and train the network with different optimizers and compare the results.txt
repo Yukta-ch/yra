@@ -4,7 +4,7 @@ AIM: Implement Feed-forward Neural Network and train the network with different 
 
 
 
-CODE:
+#CODE:
 # Import necessary libraries
 import numpy as np
 import tensorflow as tf
@@ -116,88 +116,88 @@ for optimizer, accuracy in results.items():
 
 
 
-CODE EXPLANATION:
-This code performs the following tasks:
+#CODE EXPLANATION:
+#This code performs the following tasks:
 
-Imports necessary libraries for data handling, model creation, and evaluation.
-Generates a synthetic dataset with 1000 samples, 20 features, and 2 classes.
-Splits the dataset into training and testing sets.
-Defines a feed-forward neural network model with three layers.
-Creates a function to train and evaluate the model with a given optimizer.
-Trains and evaluates the model using three different optimizers: SGD, Adam, and RMSprop.
-Prints the accuracy of the model for each optimizer.
-
-
-
-
-OUTPUT EXPLANATION:
-The output in the picture shows the results of training and evaluating the neural network model with three different optimizers: SGD, Adam, and RMSprop. Here is an explanation of the results:
-
-Training Process:
-
-Each training process involves 20 epochs. The 7/7 indicates the completion of all steps in each epoch.
-The time taken for each step is shown in milliseconds (ms) per step.
-Accuracy with Different Optimizers:
-
-SGD (Stochastic Gradient Descent) Optimizer:
-Accuracy: 0.8200
-This means that the model trained with the SGD optimizer correctly classified 82.00% of the test data.
-Adam Optimizer:
-Accuracy: 0.8650
-The model trained with the Adam optimizer correctly classified 86.50% of the test data.
-RMSprop Optimizer:
-Accuracy: 0.8650
-The model trained with the RMSprop optimizer also correctly classified 86.50% of the test data.
-
-Summary:
-The SGD optimizer achieved an accuracy of 82.00% on the test set.
-Both the Adam and RMSprop optimizers achieved a higher accuracy of 86.50% on the test set.
-This indicates that the Adam and RMSprop optimizers performed better than the SGD optimizer for this particular task.
-Interpretation:
-The higher accuracy with Adam and RMSprop suggests that these optimizers were more effective in finding the optimal weights for the neural network, resulting in better performance on the test data compared to SGD.
+#Imports necessary libraries for data handling, model creation, and evaluation.
+#Generates a synthetic dataset with 1000 samples, 20 features, and 2 classes.
+#Splits the dataset into training and testing sets.
+#Defines a feed-forward neural network model with three layers.
+#Creates a function to train and evaluate the model with a given optimizer.
+#Trains and evaluates the model using three different optimizers: SGD, Adam, and RMSprop.
+#Prints the accuracy of the model for each optimizer.
 
 
 
 
-BACKGROUND INFORMATION:
+#OUTPUT EXPLANATION:
+#The output in the picture shows the results of training and evaluating the neural network model with three different optimizers: SGD, Adam, and RMSprop. Here is #an explanation of the results:
 
-What is a Feed-forward Neural Network?
-A Feed-forward Neural Network (FNN) is a type of artificial neural network where connections between the nodes do not form cycles.
-It consists of an input layer, one or more hidden layers, and an output layer.
-Each neuron in a layer is connected to every neuron in the next layer.
+#Training Process:
+
+#Each training process involves 20 epochs. The 7/7 indicates the completion of all steps in each epoch.
+#The time taken for each step is shown in milliseconds (ms) per step.
+#Accuracy with Different Optimizers:
+
+#SGD (Stochastic Gradient Descent) Optimizer:
+#Accuracy: 0.8200
+#This means that the model trained with the SGD optimizer correctly classified 82.00% of the test data.
+#Adam Optimizer:
+#Accuracy: 0.8650
+#The model trained with the Adam optimizer correctly classified 86.50% of the test data.
+#RMSprop Optimizer:
+#Accuracy: 0.8650
+#The model trained with the RMSprop optimizer also correctly classified 86.50% of the test data.
+
+#Summary:
+#The SGD optimizer achieved an accuracy of 82.00% on the test set.
+#Both the Adam and RMSprop optimizers achieved a higher accuracy of 86.50% on the test set.
+#This indicates that the Adam and RMSprop optimizers performed better than the SGD optimizer for this particular task.
+#Interpretation:
+#The higher accuracy with Adam and RMSprop suggests that these optimizers were more effective in finding the optimal weights for the neural network, resulting in #better performance on the test data compared to SGD.
 
 
-What is an Optimizer in Neural Networks?
-An optimizer is an algorithm or method used to change the attributes of the neural network such as weights and learning rate to reduce the losses.
-Different optimizers include SGD (Stochastic Gradient Descent), Adam, and RMSprop.
 
 
-Explanation of the Code:
-Import Libraries:
+#BACKGROUND INFORMATION:
 
-numpy for numerical operations.
-tensorflow for building and training neural networks.
-sklearn for generating synthetic data and evaluating model performance.
-Generate Synthetic Dataset:
+#What is a Feed-forward Neural Network?
+#A Feed-forward Neural Network (FNN) is a type of artificial neural network where connections between the nodes do not form cycles.
+#It consists of an input layer, one or more hidden layers, and an output layer.
+#Each neuron in a layer is connected to every neuron in the next layer.
 
-Use make_classification to create a dataset with 1000 samples, 20 features, and 2 classes.
-Split the dataset into training and testing sets.
-Define the Feed-forward Neural Network:
 
-Create a simple neural network with 2 hidden layers and 1 output layer using the Sequential model from Keras.
-Use the ReLU activation function for hidden layers and the Sigmoid activation function for the output layer.
-Train and Evaluate the Model:
+#What is an Optimizer in Neural Networks?
+#An optimizer is an algorithm or method used to change the attributes of the neural network such as weights and learning rate to reduce the losses.
+#Different optimizers include SGD (Stochastic Gradient Descent), Adam, and RMSprop.
 
-Define a function to compile, train, and evaluate the model with a given optimizer.
-Train the model for 20 epochs and use binary cross-entropy loss.
-Compare Optimizers:
 
-Train and evaluate the model using three different optimizers: SGD, Adam, and RMSprop.
-Store the accuracy of each optimizer in a dictionary.
-Print Results:
+#Explanation of the Code:
+#Import Libraries:
 
-Print the accuracy for each optimizer.
+#numpy for numerical operations.
+#tensorflow for building and training neural networks.
+#sklearn for generating synthetic data and evaluating model performance.
+#Generate Synthetic Dataset:
 
-Output Interpretation:
-The code will display the accuracy of the feed-forward neural network trained with each optimizer.
-You can compare the results to see which optimizer performs best for this specific task.
+#Use make_classification to create a dataset with 1000 samples, 20 features, and 2 classes.
+#Split the dataset into training and testing sets.
+#Define the Feed-forward Neural Network:
+
+#Create a simple neural network with 2 hidden layers and 1 output layer using the Sequential model from Keras.
+#Use the ReLU activation function for hidden layers and the Sigmoid activation function for the output layer.
+#Train and Evaluate the Model:
+
+#Define a function to compile, train, and evaluate the model with a given optimizer.
+#Train the model for 20 epochs and use binary cross-entropy loss.
+#Compare Optimizers:
+
+#Train and evaluate the model using three different optimizers: SGD, Adam, and RMSprop.
+#Store the accuracy of each optimizer in a dictionary.
+#Print Results:
+
+#Print the accuracy for each optimizer.
+
+#Output Interpretation:
+#The code will display the accuracy of the feed-forward neural network trained with each optimizer.
+#You can compare the results to see which optimizer performs best for this specific task.
